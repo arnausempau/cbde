@@ -17,21 +17,21 @@ flag = ["True", "False"]
 
 # DATABASE
 def create_database(session):
-    session.run("MATCH (n) DETACH DELETE n") # drop all data in the database
-
-    create_part_nodes(session)
-    create_supp_nodes(session)
-    create_partsupp_nodes(session)
-    create_nation_nodes(session)
-    create_region_nodes(session)
-    create_order_nodes(session)
-    create_customer_nodes(session)
-    create_lineitem_nodes(session)
-    create_relationships(session)
+    
+    session.run("MATCH (n) DETACH DELETE n") 
+    crear_nodo_partes(session)
+    crear_nodo_supp(session)
+    crear_nodo_partsupp(session)
+    crear_nodo_nacion(session)
+    crear_nodo_region(session)
+    crear_nodo_orders(session)
+    crear_nodo_customer(session)
+    crear_nodo_llineitem(session)
+    establecer_relaciones(session)
 
 
 # NODES
-def create_part_nodes(session):
+def crear_nodo_partes(session):
     for i in [0, 1, 2, 3, 4]:
         session.run("CREATE (part" + key[i] + ": Part{p_partkey: " + key[i] + ", p_name: 'Partkey" + key[i] + "'"
                                                                                                               ", p_mfgr: 'ABCDEFG', p_brand: '" + brand[i] + "', p_type: 'Running'" +
@@ -40,7 +40,7 @@ def create_part_nodes(session):
                     ", p_comment: 'OK'})")
 
 
-def create_supp_nodes(session):
+def crear_nodo_supp(session):
     for i in [0, 1, 2, 3, 4]:
         session.run("CREATE (supp" + key[i] + ": Supplier{s_suppkey: " + key[i] + ", s_name: 'Supplier" + key[i] + "'"
                                                                                                                    ", s_address: '" + address[i] + "', s_phone: " + str(random.randint(600000000, 699999999)) +
@@ -48,7 +48,7 @@ def create_supp_nodes(session):
                     ", s_comment: 'OK'})")
 
 
-def create_partsupp_nodes(session):
+def crear_nodo_partsupp(session):
     for i in [0, 1, 2, 3, 4]:
         session.run("CREATE (partsupp" + key[i] + ": PartSupp{ps_partkey: " + key[i] + ", ps_suppkey: " + key[i] +
                     ", ps_availqty: " + str(random.randint(100, 500)) +
@@ -57,19 +57,19 @@ def create_partsupp_nodes(session):
 
 
 
-def create_nation_nodes(session):
+def crear_nodo_nacion(session):
     for i in [0, 1, 2, 3]:
         session.run("CREATE (nation" + key[i] + ": Nation{n_nationkey: " + key[i] + ", n_name: '" + nation[i] + "'"
                                                                                                                 ", n_comment: 'OK'})")
 
 
-def create_region_nodes(session):
+def crear_nodo_region(session):
     for i in [0, 1, 2]:
         session.run("CREATE (region" + key[i] + ": Region{r_regionkey: " + key[i] + ", r_name: '" + region[i] + "'"
                                                                                                                 ", r_comment: 'OK'})")
 
 
-def create_order_nodes(session):
+def crear_nodo_orders(session):
     for i in [0, 1, 2, 3, 4]:
         session.run("CREATE (order" + key[i] + ": Order{o_orderkey: " + key[i] + ", o_orderstatus: 'OK" + "'"
                                                                                                           ", o_totalprice: " + str(random.randint(0, 1000)) + ", o_orderdate: '" + random.choice(date) +
@@ -81,7 +81,7 @@ def create_order_nodes(session):
 
 
 
-def create_customer_nodes(session):
+def crear_nodo_customer(session):
     for i in [0, 1, 2, 3, 4]:
         session.run("CREATE (customer" + key[i] + ": Customer{c_custkey: " + key[i] + ", c_name: 'Supplier" + key[i] +
                     "', c_address: '" + address[i] + "', c_phone: " + str(random.randint(600000000, 699999999)) +
@@ -90,7 +90,7 @@ def create_customer_nodes(session):
                     "', s_comment: 'OK'})")
 
 
-def create_lineitem_nodes(session):
+def crear_nodo_llineitem(session):
     for i in [0, 1, 2, 3, 4]:
         session.run("CREATE (lineitem" + key[i] + ": Lineitem{l_linenumber: " + key[i] + ", l_quantity: " + str(random.randint(0, 100)) +
                     ", l_extendedprice: " + str(random.randint(0, 200)) + ", l_discount: " + str(random.randint(0, 99)) +
@@ -108,7 +108,7 @@ def create_lineitem_nodes(session):
 
 
 # RELATIONSHIPS BETWEEN NODES
-def create_relationships(session):
+def establecer_relaciones(session):
     # PART --> PARTSUPP
     session.run("MATCH (part1: Part{p_partkey: 1}), (partsupp1: PartSupp{ps_suppkey: 1, ps_partkey: 1}) "
                 "CREATE (part1) -[:BELONGS_TO]-> (partsupp1)")
