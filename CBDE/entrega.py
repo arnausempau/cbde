@@ -80,7 +80,7 @@ def crear_nodo_orders(connection):
 def crear_nodo_customer(connection):
     for i in [0, 1, 2, 3, 4]:
         connection.run(
-            "CREATE (customer" + key[i] + ": Customer{c_custkey: " + key[i] + ", c_name: 'Supplier" + key[i] +
+            "CREATE (customer" + key[i] + ": Customer{c_custkey: " + key[i] + ", c_name: 'Customer" + key[i] +
             "', c_address: '" + address[i] + "', c_phone: " + str(random.randint(600000000, 699999999)) +
             ", c_acctbal: " + str(random.random()) +
             ", c_mktsegment: '" + random.choice(mktsegment) +
