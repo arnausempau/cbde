@@ -281,15 +281,15 @@ def main():
     connection = driver.session()
     create_database(connection)
 
-    print("What action do you want to do?\n",
-          "[1] Execute query 1\n",
-          "[2] Execute query 2\n",
-          "[3] Execute query 3\n",
-          "[4] Execute query 4\n",
-          "[0] See the graph database\n",
-          "[-1] Exit")
+    print("Escoge la acción que deseas realizar\n",
+          "1: query 1\n",
+          "2: query 2\n",
+          "3: query 3\n",
+          "4: query 4\n",
+          "0: Mostrar base de datos actual\n",
+          "-1: Exit")
 
-    op = input("Enter the corresponding number.\n")
+    op = input("Introduce la opción deseada\n")
     op = int(op)
 
     while op != -1:
@@ -298,86 +298,86 @@ def main():
                 print(item)
 
         elif op == 1:
-            date_param = input("Enter a lineitem shipdate in the format YYYY-mm-dd: ")
+            date_param = input("Introduce una shipdate de lineitem en formato YYYY-mm-dd: ")
             while not valid_date(date_param):
-                date_param = input("Enter a lineitem shipdate in the format YYYY-mm-dd: ")
+                date_param = input("Introduce una shipdate de lineitem en formato YYYY-mm-dd: ")
 
             q1 = query1(connection,
                         str(dt.datetime.strptime(date_param, "%Y-%m-%d")))
 
-            print("Query 1 results:")
+            print("Resultados query 1:")
             for row in q1:
                 print(row)
 
         elif op == 2:
-            size_param = input("Enter a part size: ")
+            size_param = input("Introduce un size de part: ")
             while not size_param.isdigit():
-                size_param = input("Enter a part size: ")
+                size_param = input("Introduce un size de part: ")
 
-            type_param = input("Enter a part type: ")
+            type_param = input("Introduce un type de part: ")
 
-            region_param = input("Enter a region name: ")
+            region_param = input("Introduce un name de region: ")
 
             q2 = query2(connection,
                         int(size_param),
                         str(type_param),
                         str(region_param))
 
-            print("Query 2 results:")
+            print("Resultados query 2:")
             for row in q2:
                 print(row)
 
         elif op == 3:
-            mkt_segment_param = input("Enter a customer mkt_segment: ")
+            mkt_segment_param = input("Introduce un mkt_segment de un customer: ")
 
-            date1_param = input("Enter an order orderdate in the format YYYY-mm-dd: ")
+            date1_param = input("Introduce una orderdate de un order en formato YYYY-mm-dd: ")
             while not valid_date(date1_param):
-                date1_param = input("Enter an order orderdate in the format YYYY-mm-dd: ")
+                date1_param = input("Introduce una orderdate de un order en formato YYYY-mm-dd: ")
 
-            date2_param = input("Enter a lineitem shipdate in the format YYYY-mm-dd: ")
+            date2_param = input("Introduce una shipdate de un lineitem en formato YYYY-mm-dd: ")
             while not valid_date(date2_param):
-                date2_param = input("Enter a lineitem shipdate in the format YYYY-mm-dd: ")
+                date2_param = input("Introduce una shipdate de un lineitem en formato YYYY-mm-dd: ")
 
             q3 = query3(connection,
                         str(mkt_segment_param),
                         str(dt.datetime.strptime(date1_param, "%Y-%m-%d")),
                         str(dt.datetime.strptime(date2_param, "%Y-%m-%d")))
 
-            print("Query 3 results:")
+            print("Resultados query 3:")
             for row in q3:
                 print(row)
 
         elif op == 4:
-            date = input("Enter an order orderdate in the format YYYY-mm-dd: ")
+            date = input("Introduce una orderdate de un order en formato YYYY-mm-dd: ")
             while not valid_date(date):
-                date = input("Enter an order orderdate in the format YYYY-mm-dd: ")
+                date = input("Introduce una orderdate de un order en formato YYYY-mm-dd: ")
 
             date_param = dt.datetime.strptime(date, "%Y-%m-%d")
             date2_param = date_param.replace(date_param.year + 1)
 
-            region_param = input("Enter a region name: ")
+            region_param = input("Introduce un name de una region: ")
 
             q4 = query4(connection,
                         str(date_param),
                         str(date2_param),
                         str(region_param))
 
-            print("Query 4 results:")
+            print("Resultados query 4:")
             for row in q4:
                 print(row)
 
         elif op == -1:
             break
 
-        print("\nWhat action do you want to do?\n",
-              "[1] Execute query 1\n",
-              "[2] Execute query 2\n",
-              "[3] Execute query 3\n",
-              "[4] Execute query 4\n",
-              "[0] See the graph database\n",
-              "[-1] Exit")
+        print("Escoge la acción que deseas realizar\n",
+              "1: query 1\n",
+              "2: query 2\n",
+              "3: query 3\n",
+              "4: query 4\n",
+              "0: Mostrar base de datos actual\n",
+              "-1: Exit")
 
-        op = input("Enter the corresponding number.\n")
+        op = input("Introduce la opción deseada\n")
         op = int(op)
 
 
