@@ -47,12 +47,13 @@ def crear_nodo_supp(connection):
             ", s_acctbal: " + str(random.random()) + ", s_comment: 'OK'})")
 
 
+
 def crear_nodo_partsupp(connection):
     for i in [0, 1, 2, 3, 4]:
         connection.run("CREATE (partsupp" + key[i] + ": PartSupp{ps_partkey: " + key[i] + ", ps_suppkey: " + key[i] +
                        ", ps_availqty: " + str(random.randint(100, 500)) +
                        ", ps_supplycost: " + str(float(random.randint(100, 500) / 100)) + ", ps_comment: 'OK'})")
-
+    #connection.run("CREATE INDEX A FOR (n:PartSupp) ON (n.ps_supplycost)")
 
 def crear_nodo_nacion(connection):
     for i in [0, 1, 2, 3]:
@@ -75,7 +76,7 @@ def crear_nodo_orders(connection):
                        "', o_clerk: '" + "Louis" +
                        "', o_shippriority: '" + random.choice(priority) +
                        "', o_comment: 'OK'})")
-
+    #connection.run("CREATE INDEX B FOR (l:Order) ON (l.o_orderdate)")
 
 def crear_nodo_customer(connection):
     for i in [0, 1, 2, 3, 4]:
@@ -102,7 +103,7 @@ def crear_nodo_llineitem(connection):
                        "', l_shipinstruct: 'Ok" + key[i] +
                        "', l_shipmode: 'Ok" + key[i] +
                        "', l_comment: 'OK'})")
-
+    #connection.run("CREATE INDEX C FOR (m:Lineitem) ON (m.l_shipdate)")
 
 # RELATIONSHIPS BETWEEN NODES
 def establecer_relaciones(connection):
