@@ -2,21 +2,24 @@ import random
 import datetime as dt
 from neo4j import GraphDatabase
 
-# DATA
+
 key = ["1", "2", "3", "4", "5"]
-brand = ["Nike", "Adidas", "New Balance", "Oakley", "Burton"]
-address = ["Barcelona", "Madrid", "Paris", "Tokio", "Chicago"]
-nation = ["Spain", "France", "Japan", "United States"]
-region = ["Europe", "Asia", "America"]
+brand = ["Bultaco", "Nike", "Balenciaga", "Uma", "Hilfiger"]
+address = ["Barcelona", "Sevilla", "Bélgica", "Moscú", "Washington"]
+nation = ["España", "Germany", "Rusia", "Estados Unidos"]
+region = ["Europa", "Asia", "América"]
 date = ["2020-02-01", "2020-12-23", "2003-10-02", "2021-04-24", "2020-02-02"]
-priority = ["High", "Low", "Medium", "Medium-Low", "High-Medium"]
-mktsegment = ["Product", "Comunication", "Distribution", "Price", "Digital mkt", "RRSS"]
-flag = ["True", "False"]
+priority = ["Alta", "Baja", "Media", "Media-Baja", "Muy Baja"]
+mktsegment = ["Producto", "Distribución", "Reparto", "Precio", "Convalidado", "Jornada"]
+flag = ["Verdadero", "Falso"]
 
 
-# DATABASE
+
 def create_database(connection):
     connection.run("MATCH (n) DETACH DELETE n")
+    connection.run("DROP INDEX A IF EXISTS")
+    connection.run("DROP INDEX B IF EXISTS")
+    connection.run("DROP INDEX C IF EXISTS")
     crear_nodo_partes(connection)
     crear_nodo_supp(connection)
     crear_nodo_partsupp(connection)
@@ -28,7 +31,7 @@ def create_database(connection):
     establecer_relaciones(connection)
 
 
-# NODES
+
 def crear_nodo_partes(connection):
     for i in [0, 1, 2, 3, 4]:
         connection.run("CREATE (part" + key[i] + ": Part{p_partkey: " + key[i] + ", p_name: 'Partkey" + key[i] + "'"
@@ -53,7 +56,7 @@ def crear_nodo_partsupp(connection):
         connection.run("CREATE (partsupp" + key[i] + ": PartSupp{ps_partkey: " + key[i] + ", ps_suppkey: " + key[i] +
                        ", ps_availqty: " + str(random.randint(100, 500)) +
                        ", ps_supplycost: " + str(float(random.randint(100, 500) / 100)) + ", ps_comment: 'OK'})")
-    #connection.run("CREATE INDEX A FOR (n:PartSupp) ON (n.ps_supplycost)")
+    connection.run("CREATE INDEX A FOR (n:PartSupp) ON (n.ps_supplycost)")
 
 def crear_nodo_nacion(connection):
     for i in [0, 1, 2, 3]:
@@ -76,7 +79,7 @@ def crear_nodo_orders(connection):
                        "', o_clerk: '" + "Louis" +
                        "', o_shippriority: '" + random.choice(priority) +
                        "', o_comment: 'OK'})")
-    #connection.run("CREATE INDEX B FOR (l:Order) ON (l.o_orderdate)")
+    connection.run("CREATE INDEX B FOR (l:Order) ON (l.o_orderdate)")
 
 def crear_nodo_customer(connection):
     for i in [0, 1, 2, 3, 4]:
@@ -103,7 +106,7 @@ def crear_nodo_llineitem(connection):
                        "', l_shipinstruct: 'Ok" + key[i] +
                        "', l_shipmode: 'Ok" + key[i] +
                        "', l_comment: 'OK'})")
-    #connection.run("CREATE INDEX C FOR (m:Lineitem) ON (m.l_shipdate)")
+    connection.run("CREATE INDEX C FOR (m:Lineitem) ON (m.l_shipdate)")
 
 # RELATIONSHIPS BETWEEN NODES
 def establecer_relaciones(connection):
